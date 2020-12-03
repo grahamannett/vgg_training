@@ -15,7 +15,7 @@ from typing import List
 from model import get_model
 
 
-class Params(argparse.ArgumentParser):
+class P(argparse.ArgumentParser):
     DATASET_NAME = os.environ.get("DATASET_NAME", "imagenette2-160")
     DATASET_URL = os.environ.get("DATASET_URL", f"https://s3.amazonaws.com/fast-ai-imageclas/${DATASET_NAME}.tgz")
     OUTPUT = os.environ.get("OUTPUT", "/root/output/")
@@ -72,13 +72,13 @@ def dataset_check(dataset_name):
     if dataset_folder.exists() is False:
         tar_file = dataset_folder.with_suffix(".tgz")
         if tar_file.exists() is False:
-            tar_file, _ = fetch_data(url=Params.DATASET_URL)
+            tar_file, _ = fetch_data(url=P.DATASET_URL)
         untar_data(tar_file)
 
     return dataset_folder
 
 
-def get_all_subfolder_images(folder, label_dict=Params.LABELS, img_size: List[int] = Params.IMG_SIZE):
+def get_all_subfolder_images(folder, label_dict=P.LABELS, img_size: List[int] = P.IMG_SIZE):
     images = []
     labels = []
     for idx, key in enumerate(label_dict.keys()):
@@ -95,7 +95,7 @@ def get_all_subfolder_images(folder, label_dict=Params.LABELS, img_size: List[in
 
 
 if __name__ == "__main__":
-    PARAMS = Params.get_args()
+    PARAMS = P.get_args()
 
     dataset_folder = dataset_check(PARAMS.DATASET_NAME)
     x_train, y_train = get_all_subfolder_images(dataset_folder / "train")

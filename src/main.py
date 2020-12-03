@@ -1,12 +1,9 @@
-from argparse import Namespace
 import numpy as np
 from tensorflow import keras
 
 import argparse
-import dataclasses
 import os
 import urllib.request
-import sys
 import tarfile
 
 from pathlib import Path
